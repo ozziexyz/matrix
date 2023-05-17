@@ -26,15 +26,15 @@ class Matrix{
             matrix[row][col] = value;
         }
         void print(){
-            for(int i = 0; i < this->rows; i++){
-                for(int j = 0; j < this->cols; j++){
-                    cout << this->get(i, j) << " ";
+            for(int i = 0; i < rows; i++){
+                for(int j = 0; j < cols; j++){
+                    cout << get(i, j) << " ";
                 }
                 cout << "\n";
             }
         }
         Matrix identity(){
-            int size = this->cols;
+            int size = cols;
             Matrix nm(size, size);
             for(int i = 0; i < size; i ++){
                 nm.set(i, i, 1);
@@ -98,18 +98,18 @@ class Matrix{
         }
 
         Matrix(vector<vector<int>> array){
-            this->rows = array.size();
-            this->cols = array[0].size();
+            rows = array.size();
+            cols = array[0].size();
             matrix = array;
         }
 };
 
 int main(){
-    vector<vector<int>> array1 = {{3, -1}, {-3, 2}};
-    vector<vector<int>> array2 = {{-1, 5}, {2, -3}};
+    vector<vector<int>> array1 = {{4, 1, 0}, {-2, 3, -2}};
+    vector<vector<int>> array2 = {{4, 1}, {6, 2}, {-1, 3}};
 
     Matrix m1(array1);
-    m1.print();
-    Matrix m2 = m1.identity();
+    Matrix m2(array2);
+
     Matrix::multiply(m1, m2).print();
 }
