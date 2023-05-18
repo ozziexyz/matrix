@@ -108,6 +108,27 @@ class Matrix{
             cols = array[0].size();
             matrix = array;
         }
+
+        Matrix(){
+
+        }
+};
+
+class PointMatrix : public Matrix{
+    public:
+        Matrix translate(double h, double k){
+            Matrix temp(3, 3);
+            temp = temp.identity();
+            temp.set(0, 2, h);
+            temp.set(1, 2, k);
+            return temp;
+        }
+    public:
+        PointMatrix(double x, double y){
+            vector<vector<double>> v = {{x}, {y}, {1}};
+            matrix = v;
+        }
+
 };
 
 int main(){
