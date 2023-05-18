@@ -5,7 +5,7 @@ using namespace std;
 
 class Matrix{
     // instance vars
-    public: vector<vector<int>> matrix;
+    public: vector<vector<double>> matrix;
 
     private: 
         int rows;
@@ -19,10 +19,10 @@ class Matrix{
         int getCols(){
             return cols;
         }
-        int get(int row, int col){
+        double get(int row, int col){
             return matrix[row][col];
         }
-        void set(int row, int col, int value){
+        void set(int row, int col, double value){
             matrix[row][col] = value;
         }
         void print(){
@@ -65,7 +65,7 @@ class Matrix{
             return nm;
         }
 
-        static Matrix multiply(Matrix m1, int scale){
+        static Matrix multiply(Matrix m1, double scale){
             Matrix nm(m1.rows, m1.cols);
             for(int i = 0; i < m1.rows; i++){
                 for(int j = 0; j < m1.cols; j++){
@@ -79,7 +79,7 @@ class Matrix{
             Matrix nm(m1.getRows(), m2.getCols());
             for(int i = 0; i < nm.getRows(); i++){
                 for(int j = 0; j < nm.getCols(); j++){
-                    int dot = 0;
+                    double dot = 0;
                     for(int k = 0; k < m1.getCols(); k++){
                         dot += m1.get(i, k) * m2.get(k, j);
                     }
@@ -88,16 +88,22 @@ class Matrix{
             }
             return nm;
         }
+        static  Matrix inverse2x2(Matrix m){
+            double det = m.get(0, 0) * m.get(1, 1) - m.get(0, 1) * m.get(1, 0);
+            vector<vector<double>> flip = {{m.get(1, 1), (-1) * m.get(0, 1)}, {(-1) *  m.get(1, 0), m.get(0, 0)}};
+            Matrix nm(flip);
+            return multiply(nm, 1 / det);
+        }
 
     // constructors
     public: 
         Matrix(int rows, int cols){
             this->rows = rows;
             this->cols = cols;
-            matrix = vector<vector<int>>(rows, vector<int>(cols));
+            matrix = vector<vector<double>>(rows, vector<double>(cols));
         }
 
-        Matrix(vector<vector<int>> array){
+        Matrix(vector<vector<double>> array){
             rows = array.size();
             cols = array[0].size();
             matrix = array;
@@ -105,8 +111,8 @@ class Matrix{
 };
 
 int main(){
-    vector<vector<int>> array1 = {{4, 1, 0}, {-2, 3, -2}};
-    vector<vector<int>> array2 = {{4, 1}, {6, 2}, {-1, 3}};
+    vector<vector<double>> array1 = {{6, 9}, {3, 12}};
+    vector<vector<double>> array2 = {{128}, {341.6}};
 
     Matrix m1(array1);
     Matrix m2(array2);
