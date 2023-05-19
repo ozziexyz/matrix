@@ -6,7 +6,6 @@ using namespace std;
 class Matrix{
     // instance vars
     public: vector<vector<double>> matrix;
-
     private: 
         int rows;
         int cols;
@@ -33,6 +32,38 @@ class Matrix{
                 cout << "\n";
             }
         }
+        void removeRow(int row){
+            vector<vector<double>> nm;
+            for(int i = 0; i < rows; i ++){
+                vector<double> r;
+                for(int j = 0; j < cols; j++){
+                    r.push_back(matrix[i][j]);
+                }
+                if(i != row){
+                    nm.push_back(r);
+                }
+            }
+            matrix = nm;
+            update();
+        }
+        void removeCol(int col){
+            vector<vector<double>> nm;
+            for(int i = 0; i < rows; i ++){
+                vector<double> r;
+                for(int j = 0; j < cols; j++){
+                    if(j != col){
+                        r.push_back(matrix[i][j]);
+                    }
+                }
+                nm.push_back(r);
+            }
+            matrix = nm;
+            update();
+        }
+        void update(){
+            rows = matrix.size();
+            cols = matrix[0].size();
+        }
         Matrix identity(){
             int size = cols;
             Matrix nm(size, size);
@@ -51,6 +82,10 @@ class Matrix{
                 }
             }
             return nm;
+        }
+        void removeCombo(int row, int col){
+            removeRow(row);
+            removeCol(col);
         }
 
     // public static methods
@@ -132,11 +167,11 @@ class PointMatrix : public Matrix{
 };
 
 int main(){
-    vector<vector<double>> array1 = {{6, 9}, {3, 12}};
-    vector<vector<double>> array2 = {{128}, {341.6}};
+    vector<vector<double>> array1 = {{6, 9, 5}, {3, 12, 5}, {5, 5, 5}};
 
     Matrix m1(array1);
-    Matrix m2(array2);
 
-    Matrix::multiply(m1, m2).print();
+    m1.removeCombo(1, 1);
+
+    m1.print();
 }
